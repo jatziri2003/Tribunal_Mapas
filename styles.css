@@ -1,0 +1,196 @@
+:root {
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: #102a4c;
+  background: #e7edf3;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; min-height: 100vh; }
+button { font: inherit; cursor: pointer; }
+
+.deck-shell {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: clamp(10px, 2vw, 28px);
+}
+.directory-link {
+  position: fixed;
+  z-index: 5;
+  right: clamp(14px, 2vw, 28px);
+  bottom: clamp(14px, 2vw, 28px);
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  padding: 10px;
+  border: 1px solid #f4bd00;
+  border-radius: 50%;
+  color: #fff;
+  background: #003d75;
+  box-shadow: 0 8px 20px rgba(16, 42, 76, .25);
+  text-decoration: none;
+}
+.directory-link:hover,
+.directory-link:focus-visible {
+  color: #102a4c;
+  background: #f4bd00;
+  outline: 3px solid rgba(244, 189, 0, .4);
+  outline-offset: 2px;
+}
+.directory-link svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.75;
+}
+.deck {
+  position: relative;
+  width: min(100%, 1600px);
+  min-width: 900px;
+  aspect-ratio: 16 / 9;
+  overflow: visible;
+  box-shadow: 0 14px 35px rgba(16, 42, 76, .22);
+}
+.slide {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #fff;
+  isolation: isolate;
+  cursor: pointer;
+  touch-action: pan-y;
+}
+.slide__background {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: #fff center / 100% 100% no-repeat;
+}
+.hotspots { position: absolute; inset: 0; }
+
+/* Las zonas de la diapositiva 3 son invisibles hasta que reciben foco o el cursor pasa sobre ellas. */
+.hotspot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background: transparent;
+  cursor: pointer;
+}
+.hotspot:hover,
+.hotspot:focus-visible {
+  border-color: rgba(0, 61, 117, .7);
+  background: rgba(244, 189, 0, .28);
+  outline: none;
+}
+
+.map-dialog {
+  width: min(94vw, 1100px);
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  color: #102a4c;
+  background: #fff;
+  box-shadow: 0 24px 60px rgba(0, 24, 52, .4);
+}
+.directory-dialog { width: min(96vw, 1200px); }
+.map-dialog::backdrop { background: rgba(4, 30, 59, .4); }
+.map-dialog__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 19px 23px 16px;
+  color: #fff;
+  background: #003d75;
+}
+.map-dialog__header span { display: block; opacity: .8; font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.map-dialog h2 { margin: 4px 0 0; font-size: 1.35rem; }
+.close-button {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  color: #fff;
+  background: transparent;
+  font-size: 1.7rem;
+  line-height: 1;
+}
+.close-button:hover { background: rgba(255, 255, 255, .17); }
+.map-canvas {
+  display: grid;
+  min-height: min(62vh, 620px);
+  padding: 18px;
+  background: #e9f0f6;
+}
+.court-directory { width: 100%; max-height: min(66vh, 650px); overflow-y: auto; padding-right: 5px; }
+.court-directory__intro { margin: 0 0 14px; color: #395b7b; line-height: 1.45; }
+.court-directory__list { display: grid; gap: 12px; }
+.court-card { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(360px, 1fr); column-gap: 20px; row-gap: 12px; padding: 16px; border: 1px solid #c7d7e6; border-radius: 9px; background: #fff; box-shadow: 0 3px 10px rgba(16, 42, 76, .07); }
+.court-card h3 { grid-column: 1 / -1; margin: 0; color: #003d75; font-size: 1rem; line-height: 1.35; }
+.court-card dl { display: grid; grid-column: 1; grid-template-columns: minmax(90px, 115px) minmax(0, 1fr); gap: 7px 12px; margin: 0; font-size: .9rem; line-height: 1.45; }
+.court-card dt { color: #52708b; font-weight: 700; }
+.court-card dd { margin: 0; color: #18344f; }
+.court-card__actions { display: flex; grid-column: 1; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 3px; }
+.court-card__source { min-height: 34px; padding: 7px 12px; border: 1px solid #9db6cf; border-radius: 6px; color: #163e68; background: #fff; font-size: .86rem; font-weight: 700; text-decoration: none; }
+.court-card__source:hover,
+.court-card__source:focus-visible { border-color: #003d75; color: #fff; background: #003d75; }
+.court-card__map { grid-column: 2; grid-row: 2 / span 2; margin: 0; min-height: 100%; }
+.court-card__map-frame { display: block; width: 100%; height: 100%; min-height: 300px; border: 0; border-radius: 6px; background: #e9f0f6; }
+.directory-tabs { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 22px; border-bottom: 1px solid #d9e2ea; background: #f6f9fc; }
+.directory-tab { min-height: 34px; padding: 7px 13px; border: 1px solid #9db6cf; border-radius: 6px; color: #163e68; background: #fff; font-weight: 700; }
+.directory-tab:hover,
+.directory-tab:focus-visible,
+.directory-tab.is-active { border-color: #003d75; color: #fff; background: #003d75; }
+.official-sites-view { min-height: min(76vh, 760px); padding: 16px; background: #e9f0f6; }
+.official-sites-map { width: 100%; height: min(68vh, 670px); min-height: 460px; border-radius: 7px; background: #dce8f2; }
+.official-sites-map--unavailable { display: grid; place-items: center; padding: 24px; color: #587087; text-align: center; }
+.official-sites-note { margin: 11px 2px 0; color: #587087; font-size: .88rem; }
+.directory-viewer {
+  min-height: min(76vh, 760px);
+  background: #e9f0f6;
+}
+.directory-viewer__frame {
+  display: block;
+  width: 100%;
+  height: min(76vh, 760px);
+  min-height: 560px;
+  border: 0;
+  background: #fff;
+}
+.map-placeholder { align-self: center; justify-self: center; max-width: 520px; color: #587087; text-align: center; line-height: 1.5; }
+.map-placeholder strong { display: block; margin-bottom: 6px; color: #103a66; }
+.map-dialog__footer { display: flex; justify-content: flex-end; padding: 14px 22px; border-top: 1px solid #d9e2ea; }
+.dialog-button { min-height: 36px; padding: 8px 16px; border: 1px solid #f4bd00; border-radius: 7px; color: #152c4e; background: #f4bd00; font-weight: 700; }
+.dialog-button:hover { background: #ffd02c; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+@media (max-width: 940px) {
+  .deck-shell { display: block; overflow-x: auto; padding: 22px 12px; }
+  .deck { width: 900px; margin: 0 auto; }
+  .court-card__map-frame { height: 260px; }
+  .directory-viewer__frame { height: 70vh; min-height: 420px; }
+  .official-sites-map { height: 64vh; min-height: 400px; }
+  .directory-link { right: 14px; bottom: 14px; }
+}
+
+@media (max-width: 760px) {
+  .court-card { grid-template-columns: 1fr; }
+  .court-card h3,
+  .court-card dl,
+  .court-card__actions,
+  .court-card__map { grid-column: 1; }
+  .court-card__map { grid-row: auto; margin-top: 2px; }
+  .court-card__map-frame { height: 260px; min-height: 0; }
+  .official-sites-view { padding: 12px; }
+  .official-sites-map { height: 58vh; min-height: 340px; }
+}

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Presentación interactiva de inversión por municipio">
+  <title>Inversión en salas de oralidad y juzgados</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+</head>
+<body>
+  <main class="deck-shell">
+    <section class="deck" aria-label="Presentación de siete diapositivas">
+      <div class="slide" id="slide" aria-label="Diapositiva de la presentación">
+        <div class="slide__background" id="slideBackground"></div>
+        <div class="hotspots" id="hotspots" hidden></div>
+      </div>
+
+    </section>
+  </main>
+
+  <button
+    class="directory-link"
+    type="button"
+    data-open-directory
+    aria-label="Abrir el mapa de sedes oficiales de Tabasco"
+    title="Ver sedes oficiales"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M12 21s6.5-6.1 6.5-11.3A6.5 6.5 0 1 0 5.5 9.7C5.5 14.9 12 21 12 21Z" />
+      <circle cx="12" cy="9.5" r="2.3" />
+    </svg>
+  </button>
+
+  <dialog class="map-dialog" id="mapDialog" aria-labelledby="mapDialogTitle">
+    <header class="map-dialog__header">
+      <div>
+        <span id="mapDialogCategory">Municipio</span>
+        <h2 id="mapDialogTitle">Mapa</h2>
+      </div>
+      <button class="close-button" type="button" data-close-dialog="mapDialog" aria-label="Cerrar">×</button>
+    </header>
+    <div class="map-canvas" id="mapCanvas" aria-label="Directorio de juzgados"></div>
+    <footer class="map-dialog__footer">
+      <button class="dialog-button" type="button" data-close-dialog="mapDialog">Cerrar</button>
+    </footer>
+  </dialog>
+
+  <dialog class="map-dialog directory-dialog" id="directoryDialog" aria-labelledby="directoryDialogTitle">
+    <header class="map-dialog__header">
+      <div>
+        <span>Consulta de apoyo</span>
+        <h2 id="directoryDialogTitle">Sedes oficiales y directorio</h2>
+      </div>
+      <button class="close-button" type="button" data-close-dialog="directoryDialog" aria-label="Cerrar">×</button>
+    </header>
+    <div class="directory-tabs" role="tablist" aria-label="Consulta disponible">
+      <button class="directory-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="officialSitesView" data-directory-view="sites">Sedes oficiales</button>
+      <button class="directory-tab" type="button" role="tab" aria-selected="false" aria-controls="directoryExcelView" data-directory-view="excel">Directorio Excel</button>
+    </div>
+    <section class="official-sites-view" id="officialSitesView" role="tabpanel">
+      <div class="official-sites-map" id="officialSitesMap" aria-label="Mapa de sedes oficiales"></div>
+      <p class="official-sites-note">Ubicaciones incluidas en el archivo KMZ del directorio oficial.</p>
+    </section>
+    <div class="directory-viewer" id="directoryExcelView" role="tabpanel" hidden>
+      <iframe
+        class="directory-viewer__frame"
+        id="directoryViewer"
+        title="Vista del directorio consolidado de juzgados"
+      ></iframe>
+    </div>
+    <footer class="map-dialog__footer">
+      <button class="dialog-button" type="button" data-close-dialog="directoryDialog">Cerrar</button>
+    </footer>
+  </dialog>
+
+  <template id="hotspotTemplate">
+    <button class="hotspot" type="button"><span class="sr-only"></span></button>
+  </template>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="official-sites.js"></script>
+  <script src="courts-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
